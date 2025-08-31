@@ -1,8 +1,8 @@
 spring:
   application:
-    name: accounts
+    name: loans
   datasource:
-    url: jdbc:h2:mem:accountsdb
+    url: jdbc:h2:mem:loansdb
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -17,4 +17,4 @@ springdoc:
   api-docs:
     version: openapi_3_0
 server:
-  port: 8081
+  port: 8082
