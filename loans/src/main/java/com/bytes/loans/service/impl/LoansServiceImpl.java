@@ -56,7 +56,7 @@ public class LoansServiceImpl implements LoansService {
         Loans loans = loansRepository.findByMobileNumber(loansDto.getMobileNumber()).orElseThrow(
                 () -> new ResourceNotFoundException("Loan", "mobileNumber", loansDto.getMobileNumber())
         );
-        LoansMapper.mapToLoans( loansDto );
+        loans = LoansMapper.mapToLoans(loansDto);
         loansRepository.save(loans);
         return  true;
     }
