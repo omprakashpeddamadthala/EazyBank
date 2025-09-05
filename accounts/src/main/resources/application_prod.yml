@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+build:
+  version: 3.0.0
+
+accounts:
+  message: "Welcome to EazyBank accounts related PROD APIs "
+  contactDetails:
+    name: "Sandeep Kuamr- Manager"
+    email: "SandeepKumar@gmail.com"
+  onCallSupport:
+    - (555) 9990-1234
+    - (555) 9990-1345

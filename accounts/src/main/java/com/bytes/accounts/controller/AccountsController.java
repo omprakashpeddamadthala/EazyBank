@@ -1,6 +1,7 @@
 package com.bytes.accounts.controller;
 
 import com.bytes.accounts.constants.AccountsConstants;
+import com.bytes.accounts.dto.AccountsContactInfoDto;
 import com.bytes.accounts.dto.CustomerDto;
 import com.bytes.accounts.dto.ErrorResponseDto;
 import com.bytes.accounts.dto.ResponseDto;
@@ -13,7 +14,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,11 +28,18 @@ import org.springframework.web.bind.annotation.*;
 )
 @RestController
 @RequestMapping("/api/v1/accounts")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Validated
 public class AccountsController {
 
-    private AccountsService accountsService;
+    private final AccountsService accountsService;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    private final Environment environment;
+
+    private final  AccountsContactInfoDto accountsContactInfoDto;
 
     @Operation(
             summary = "Create Account REST API",
@@ -151,5 +161,69 @@ public class AccountsController {
                     .status( HttpStatus.EXPECTATION_FAILED )
                     .body( new ResponseDto( AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_DELETE ) );
         }
+    }
+
+    @Operation(
+            summary = "Build Version REST API",
+            description = "REST API to fetch the build version of the application"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error"
+            )
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildVersion() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(buildVersion);
+    }
+
+    @Operation(
+            summary = "Java Version REST API",
+            description = "REST API to fetch the Java version of the application"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error"
+            )
+    })
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(environment.getProperty("JAVA_HOME"));
+    }
+
+
+    @Operation(
+            summary = "Contact Info REST API",
+            description = "REST API to fetch the Contact Info of the application"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error"
+            )
+    })
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(accountsContactInfoDto);
     }
 }
