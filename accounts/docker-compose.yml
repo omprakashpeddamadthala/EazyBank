@@ -1,0 +1,40 @@
+services:
+  accounts:
+    image: omprakashornold/accounts:v1
+    container_name: accounts_ms
+    ports:
+      - "8081:8081"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybank
+
+  loans:
+    image: omprakashornold/loans:v1
+    container_name: loans_ms
+    ports:
+      - "8082:8082"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybank
+
+  cards:
+    image: omprakashornold/cards:v1
+    container_name: cards_ms
+    ports:
+      - "8083:8083"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybank
+
+networks:
+  eazybank:
+    driver: "bridge"
