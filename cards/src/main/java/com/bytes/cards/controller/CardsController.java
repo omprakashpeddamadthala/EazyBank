@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class CardsController {
 
-    private CardsService cardsService;
+    private final CardsService cardsService;
 
     @Value( "${build.version}" )
     private String buildVersion;
