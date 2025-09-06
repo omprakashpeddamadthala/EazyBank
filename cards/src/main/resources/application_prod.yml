@@ -5,7 +5,7 @@ spring:
 build:
   version: 3.0.0
 
-accounts:
+cards:
   message: "Welcome to EazyBank accounts related PROD APIs "
   contactDetails:
     name: "Sandeep Kuamr- Manager"

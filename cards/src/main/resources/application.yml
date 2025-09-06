@@ -13,8 +13,27 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  config:
+    import:
+      - "application_qa.yml"
+      - "application_prod.yml"
+  profiles:
+    active:
+      - "qa"
 springdoc:
   api-docs:
     version: openapi_3_0
 server:
   port: 8083
+
+build:
+  version: 1.0.0
+
+cards:
+  message: "Welcome to EazyBank accounts related local APIs "
+  contactDetails:
+    name: "Om Prakash Peddamadthala- Developer"
+    email: "omprakashornold@gmail.com"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 523-1345

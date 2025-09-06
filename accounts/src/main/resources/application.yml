@@ -19,7 +19,7 @@ spring:
       - "application_prod.yml"
   profiles:
     active:
-      - "prod"
+      - "qa"
 springdoc:
   api-docs:
     version: openapi_3_0

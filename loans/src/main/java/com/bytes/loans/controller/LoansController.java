@@ -2,6 +2,7 @@ package com.bytes.loans.controller;
 
 import com.bytes.loans.constants.LoansConstants;
 import com.bytes.loans.dto.ErrorResponseDto;
+import com.bytes.loans.dto.LoansContactInfoDto;
 import com.bytes.loans.dto.LoansDto;
 import com.bytes.loans.dto.ResponseDto;
 import com.bytes.loans.service.LoansService;
@@ -13,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,13 @@ import org.springframework.web.bind.annotation.*;
 public class LoansController {
 
     private final LoansService loansService;
+
+    private final Environment environment;
+
+    @Value( "${build.version}" )
+    private String buildVersion;
+
+    private final LoansContactInfoDto loansContactInfoDto;
 
     @Operation(
             summary = "Create Loan",
@@ -155,4 +165,74 @@ public class LoansController {
     }
 
 
+    @Operation(
+            summary = "Get Build version information",
+            description = "REST API to get build version "
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo(){
+        return ResponseEntity
+                .status( HttpStatus.OK )
+                .body(this.buildVersion  );
+
+    }
+
+    @Operation(
+            summary = "Get Java version information",
+            description = "REST API to get java version "
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion(){
+        return ResponseEntity
+                .status( HttpStatus.OK )
+                .body(environment.getProperty( "JAVA_HOME" ) );
+    }
+
+
+    @Operation(
+            summary = "Contact Info REST API",
+            description = "REST API to fetch the Contact Info of the application"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error"
+            )
+    })
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfoDto> getContactInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(loansContactInfoDto);
+    }
 }

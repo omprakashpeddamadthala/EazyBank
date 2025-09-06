@@ -1,6 +1,7 @@
 package com.bytes.cards.controller;
 
 import com.bytes.cards.constants.CardsConstants;
+import com.bytes.cards.dto.CardsContactInfoDto;
 import com.bytes.cards.dto.CardsDto;
 import com.bytes.cards.dto.ErrorResponseDto;
 import com.bytes.cards.dto.ResponseDto;
@@ -14,6 +15,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +31,18 @@ import org.springframework.web.bind.annotation.*;
 )
 @RestController
 @RequestMapping(path = "/api/v1/cards", produces = {MediaType.APPLICATION_JSON_VALUE})
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Validated
 public class CardsController {
 
     private CardsService cardsService;
+
+    @Value( "${build.version}" )
+    private String buildVersion;
+
+    private final Environment environment;
+
+    private final CardsContactInfoDto cardsContactInfoDto;
 
     @Operation(
             summary = "Create Card REST API",
@@ -160,4 +171,74 @@ public class CardsController {
         }
     }
 
+    @Operation(
+            summary = "Get Build version information",
+            description = "REST API to get build version "
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo(){
+        return ResponseEntity
+                .status( HttpStatus.OK )
+                .body(this.buildVersion  );
+
+    }
+
+    @Operation(
+            summary = "Get Java version information",
+            description = "REST API to get java version "
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion(){
+        return ResponseEntity
+                .status( HttpStatus.OK )
+                .body(environment.getProperty( "JAVA_HOME" ) );
+    }
+
+
+    @Operation(
+            summary = "Contact Info REST API",
+            description = "REST API to fetch the Contact Info of the application"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error"
+            )
+    })
+    @GetMapping("/contact-info")
+    public ResponseEntity<CardsContactInfoDto> getContactInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(cardsContactInfoDto);
+    }
 }
