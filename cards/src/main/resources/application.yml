@@ -17,8 +17,20 @@ spring:
         format_sql: true
   config:
     import: optional:configserver:http://localhost:8071
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 springdoc:
   api-docs:
     version: openapi_3_0
 server:
   port: 8083
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
