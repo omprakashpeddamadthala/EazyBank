@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: "config-server"
+  profiles:
+   # active: "native"
+    active: "git"
+  cloud:
+    config:
+      server:
+       # native:
+          #search-locations: "file:///Users/omprakashonold/config"
+          #search-locations: "classpath:/config"
+       git:
+         uri: https://github.com/omprakashpeddamadthala/EazyBank_Config_Files.git
+         default-label: main
+         clone-on-start: true
+         timeout: 5
+         force-pull: true
+
+server:
+  port: 8071
+encrypt:
+  key: "A789ASQWEDFR4567JSDSHIUS3232894ASDFBASKJB"  # Example key, use a secure key in production
