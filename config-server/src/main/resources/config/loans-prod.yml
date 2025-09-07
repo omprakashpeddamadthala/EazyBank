@@ -1,11 +1,7 @@
-spring:
-  config:
-    activate:
-      on-profile: "prod"
 build:
   version: 3.0.0
 
-accounts:
+loans:
   message: "Welcome to EazyBank accounts related PROD APIs "
   contactDetails:
     name: "Sandeep Kuamr- Manager"
