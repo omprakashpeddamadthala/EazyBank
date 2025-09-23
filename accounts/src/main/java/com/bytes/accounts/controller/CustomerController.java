@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Customer REST APIs for Customer Details in EazyBank", description = "REST API to fetch Customer Details from EazyBank")
 @RestController
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/v1/api/customer")
 @RequiredArgsConstructor
 @Validated
 public class CustomerController {

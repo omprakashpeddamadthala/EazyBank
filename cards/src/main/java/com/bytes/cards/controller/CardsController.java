@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
         description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE card details"
 )
 @RestController
-@RequestMapping(path = "/api/v1/cards", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping("/v1/api")
 @RequiredArgsConstructor
 @Validated
 public class CardsController {
