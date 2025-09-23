@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
         description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account details"
 )
 @RestController
-@RequestMapping("/api/v1/accounts")
+@RequestMapping("/v1/api")
 @RequiredArgsConstructor
 @Validated
 public class AccountsController {

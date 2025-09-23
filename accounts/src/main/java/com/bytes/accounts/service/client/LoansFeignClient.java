@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "loans")
 public interface LoansFeignClient {
 
-    @GetMapping("/api/v1/loans/fetch")
+    @GetMapping("/v1/api/fetch")
     ResponseEntity<LoansDto> fetchLoanDetails(@RequestParam String mobileNumber);
 }
