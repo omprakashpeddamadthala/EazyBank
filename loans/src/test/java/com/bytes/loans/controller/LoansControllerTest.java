@@ -62,7 +62,7 @@ class LoansControllerTest {
         when(loansService.fetchLoanDetails(mobileNumber)).thenReturn(loansDto);
 
         // Act
-        ResponseEntity<LoansDto> response = loansController.fetchLoanDetails(mobileNumber);
+        ResponseEntity<LoansDto> response = loansController.fetchLoanDetails(mobileNumber,"aslkdas");
 
         // Assert
         verify(loansService, times(1)).fetchLoanDetails(mobileNumber);

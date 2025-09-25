@@ -67,7 +67,7 @@ class CardsControllerTest {
         when(cardsService.fetchCard(anyString())).thenReturn(cardsDto);
 
         // Act
-        ResponseEntity<CardsDto> response = cardsController.fetchCardDetails(MOBILE_NUMBER);
+        ResponseEntity<CardsDto> response = cardsController.fetchCardDetails(MOBILE_NUMBER,"ashd");
 
         // Assert
         assertNotNull(response);
