@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CardsFeignClient cardsFeignClient;
 
     @Override
-    public CustomerDetailsDto getCustomerDetails(String mobileNumber) {
+    public CustomerDetailsDto getCustomerDetails(String mobileNumber,String correlationId) {
         log.info("Fetching customer details for mobile number: {}", mobileNumber);
 
         Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
@@ -47,8 +47,8 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer);
         customerDetailsDto.setAccountsDto( AccountsMapper.mapToAccountDto( accounts ) );
 
-        ResponseEntity<LoansDto> loansDto = loansFeignClient.fetchLoanDetails( mobileNumber );
-        ResponseEntity<CardsDto> cardDto = cardsFeignClient.fetchCardDetails( mobileNumber );
+        ResponseEntity<LoansDto> loansDto = loansFeignClient.fetchLoanDetails( mobileNumber, correlationId );
+        ResponseEntity<CardsDto> cardDto = cardsFeignClient.fetchCardDetails( mobileNumber,correlationId );
 
         customerDetailsDto.setCardsDto(  cardDto.getBody() );
         customerDetailsDto.setLoansDto( loansDto.getBody() );

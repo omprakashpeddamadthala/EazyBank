@@ -4,5 +4,5 @@ import com.bytes.accounts.dto.CustomerDetailsDto;
 
 public interface CustomerService {
 
-    CustomerDetailsDto getCustomerDetails(String mobileNumber);
+    CustomerDetailsDto getCustomerDetails(String mobileNumber,String correlationId);
 }
