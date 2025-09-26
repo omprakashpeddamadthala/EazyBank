@@ -1,34 +1,4 @@
 services:
-  accountsdb:
-    container_name: acccountsdb
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_DATABASE: accountsdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
-
-  loansdb:
-    container_name: loansdb
-    ports:
-      - 3307:3306
-    environment:
-      MYSQL_DATABASE: loansdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
-
-  cardsdb:
-    container_name: cardsdb
-    ports:
-      - 3308:3306
-    environment:
-      MYSQL_DATABASE: cardsdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
-
   rabbit:
     image: rabbitmq:3.13-management
     hostname: rabbitmq
@@ -90,7 +60,9 @@ services:
       - "8081:8081"
     environment:
       SPRING_APPLICATION_NAME: "accounts"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3306/accountsdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://ep-winter-star-ad8q0gjh-pooler.c-2.us-east-1.aws.neon.tech/accountsdb?sslmode=require&channel_binding=require"
+      SPRING_DATASOURCE_USERNAME: neondb_owner
+      SPRING_DATASOURCE_PASSWORD: npg_IyHQEVcL2W4r
     depends_on:
       configserver:
         condition: service_healthy
@@ -113,7 +85,9 @@ services:
       - "8082:8082"
     environment:
       SPRING_APPLICATION_NAME: "loans"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3306/loansdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://ep-muddy-sky-adowmsxn-pooler.c-2.us-east-1.aws.neon.tech/loansdb?sslmode=require&channel_binding=require"
+      SPRING_DATASOURCE_USERNAME: neondb_owner
+      SPRING_DATASOURCE_PASSWORD: npg_9G1EKPRUwDLa
     depends_on:
       configserver:
         condition: service_healthy
@@ -136,7 +110,9 @@ services:
       - "8083:8083"
     environment:
       SPRING_APPLICATION_NAME: "cards"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://ep-billowing-fire-adrisw7s-pooler.c-2.us-east-1.aws.neon.tech/cardsdb?sslmode=require&channel_binding=require"
+      SPRING_DATASOURCE_USERNAME: neondb_owner
+      SPRING_DATASOURCE_PASSWORD: neondb_owner
     depends_on:
       configserver:
         condition: service_healthy

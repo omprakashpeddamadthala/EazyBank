@@ -4,9 +4,9 @@ spring:
   profiles:
     active: qa
   datasource:
-    url: jdbc:mysql://localhost:3306/accountsdb
-    username: root
-    password: root
+    url: jdbc:postgresql://ep-winter-star-ad8q0gjh-pooler.c-2.us-east-1.aws.neon.tech/accountsdb?sslmode=require&channel_binding=require
+    username: neondb_owner
+    password: npg_IyHQEVcL2W4r
   jpa:
     show-sql: true
   sql:
